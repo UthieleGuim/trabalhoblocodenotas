@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <title>Notas | Criar Nota</title>
+
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const token = localStorage.getItem('@token');
+
+        if (!token) {
+          window.location.href = '/';
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <header class="container-header">
+      <div class="content-header">
+        <a class="btn-profile" href="/profile">
+          Bem vindo, <br>
+          <span id="name-user"></span>
+        </a>
+
+        <button class="btn-link" id="logout">Sair</button>
+      </div>
+    </header>
+
+    <section class="container-login">
+      <div class="content-login">
+        <div>
+          <h1 class="title">Criar nota</h1>
+
+          <div id="error" class="error-content">
+            <p>
+              Todos os campos são obrigatório!
+            </p>
+          </div>
+        </div>
+
+        <form class="form-login" id="note-form">
+          <input class="form-input" type="text" name="title" placeholder="Título" required/>
+          <textarea class="form-textarea" name="content" placeholder="Observações" rows="10" required></textarea>
+          <input class="form-input" type="text" name="link" placeholder="Link" />
+          <button class="btn-primary" type="submit">Salvar</button>
+        </form>
+
+        <a class="link" href="/notes">Voltar</a>
+      </div>
+    </section>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', async function() {
+        const user = JSON.parse(localStorage.getItem('@user'));
+
+        const nameUserDiv = document.getElementById('name-user');
+
+        nameUserDiv.textContent = user.name.split(' ')[0];
+      });
+
+      document.getElementById('note-form').addEventListener('submit', async function(event) {
+        event.preventDefault();
+         
+        const errorDiv = document.getElementById('error');
+        const token = localStorage.getItem('@token');
+
+        const title = event.target.title.value;
+        const content = event.target.content.value;
+        const link = event.target.link.value;
+
+        
+        errorDiv.style.display = 'none';
+
+        try {
+          const response = await fetch('http://localhost:8080/notes', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ title, content, link })
+          });
+
+          if(response.status === 400) {
+            errorDiv.style.display = 'block';
+          } else {
+            window.location.href = '/notes';
+          }
+        } catch (error) {
+          errorDiv.style.display = 'block';
+        }
+      });
+
+      document.getElementById('logout').addEventListener('click', async function() {
+        localStorage.removeItem('@token');
+        localStorage.removeItem('@user');
+
+        window.location.href = '/notes';
+      });
+    </script>
+  </body>
+</html>

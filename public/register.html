@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <title>Notas | Cadastro</title>
+
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <section class="container-login">
+      <div class="content-login">
+        <div>
+          <h1 class="title">Crie sua conta</h1>
+          <p class="description">Aplicação para salvar e gerenciar suas notas.</p>
+
+          <div id="error" class="error-content">
+            <p id="error-required">
+              Todos os campos são obrigatório!
+            </p>
+            <p id="error-exists">
+              Esse e-mail já está cadastrado
+            </p>
+          </div>
+        </div>
+
+        <form class="form-login" id="registration-form">
+          <input class="form-input" type="text" name="name" placeholder="Nome" required/>
+          <input class="form-input" type="email" name="email" placeholder="E-mail" required/>
+          <input class="form-input" type="password" name="password" placeholder="Senha" required/>
+          <button class="btn-primary" type="submit">Cadastrar</button>
+        </form>
+
+        <a class="link" href="/">Voltar para o login</a>
+      </div>
+    </section>
+
+    <script>
+      document.getElementById('registration-form').addEventListener('submit', async function(event) {
+        event.preventDefault();
+         
+        const errorDiv = document.getElementById('error');
+        const errorRequired = document.getElementById('error-required');
+        const errorExists = document.getElementById('error-exists');
+
+        const name = event.target.name.value;
+        const email = event.target.email.value;
+        const password = event.target.password.value;
+
+        
+        errorDiv.style.display = 'none';
+        errorRequired.style.display = 'none';
+        errorExists.style.display = 'none';
+
+        try {
+          const response = await fetch('http://localhost:8080/register', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name, email, password })
+          });
+
+          if(response.status === 400) {
+            errorDiv.style.display = 'block';
+            errorExists.style.display = 'block';
+          } else if(response.status === 404) {
+            errorDiv.style.display = 'block';
+            errorRequired.style.display = 'block';
+          } else {
+            window.location.href = '/';
+          }
+        } catch (error) {
+          errorDiv.style.display = 'block';
+        }
+      });
+    </script>
+  </body>
+</html>

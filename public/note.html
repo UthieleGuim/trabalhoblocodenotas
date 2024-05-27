@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <title>Notas</title>
+
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const token = localStorage.getItem('@token');
+
+        if (!token) {
+          window.location.href = '/';
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <header class="container-header">
+      <div class="content-header">
+        <a class="btn-profile" href="/profile">
+          Bem vindo, <br>
+          <span id="name-user"></span>
+        </a>
+
+        <button class="btn-link" id="logout">Sair</button>
+      </div>
+    </header>
+
+    <section class="container">
+      <div class="content">
+        <div class="header-note">
+          <input type="hidden" name="notaId" id="notaId">
+          <button class="btn-link" type="button" id="delete-note">Excluir a nota</button>
+        </div>
+
+        <div class="container-note" id="content-note">
+          <h2 id="title-note" class="title-note"></h2>
+          <p id="description-note" class="description-note"></p>
+          <a id="link-note" class="link-note" href="" target="_blank"></a>
+        </div>
+
+        <a class="btn-primary" href="/notes">Voltar</a>
+      </div>
+    </section>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', async function() {
+        const user = JSON.parse(localStorage.getItem('@user'));
+        const token = localStorage.getItem('@token');
+
+        const currentUrl = window.location.href;
+        const url = new URL(currentUrl);
+        const pathname = url.pathname;
+        const pathParts = pathname.split('/');
+        const noteId = pathParts[pathParts.length - 1];
+        
+        const titleNoteDiv = document.getElementById('title-note');
+        const descriptionNoteDiv = document.getElementById('description-note');
+        const linkNoteDiv = document.getElementById('link-note');
+        const notaIdInput = document.getElementById('notaId');
+        const nameUserDiv = document.getElementById('name-user');
+
+        nameUserDiv.textContent = user.name.split(' ')[0];
+
+        try {
+          const response = await fetch(`http://localhost:8080/notes/${noteId}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            }
+          });
+
+          const result = await response.json();
+
+          notaIdInput.value = result.id
+          titleNoteDiv.textContent = result.title;
+          descriptionNoteDiv.textContent = result.content;
+
+          if(result.link) {
+            linkNoteDiv.href = result.link;
+            linkNoteDiv.textContent = result.link;
+          } else {
+            linkNoteDiv.style.display = 'none';
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      });
+
+      document.getElementById('delete-note').addEventListener('click', async function() {
+        const token = localStorage.getItem('@token');
+        const notaId = document.getElementById('notaId').value;
+
+        try {
+          const response = await fetch(`http://localhost:8080/notes/${notaId}`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            }
+          });
+
+          window.location.href = '/notes';
+        } catch (error) {
+          console.log(error);
+        }
+      });
+
+      document.getElementById('logout').addEventListener('click', async function() {
+        localStorage.removeItem('@token');
+        localStorage.removeItem('@user');
+
+        window.location.href = '/notes';
+      });
+    </script>
+  </body>
+</html>

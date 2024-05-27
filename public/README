@@ -1,0 +1,121 @@
+Projeto se refere ao um bloco de notas, onde o usurio apois fazer o cadastro e logar o mesmo pode criar, editar e exlucir suas notas, além disso se caso for necessario tem um campo onde o mesmo pode colocar  link.
+
+-Configurar e executar o projeto :
+Para executar o projeto primeiro extrair a pasta( consta zipada), abrir no vs code e após isso abrir o terminal, ao abrir o  terminal escrever node index.js para executar, com isso vai aparecer o server com o localhost e a porta (8080).
+Para parar de executar é só usar o ctrl + c.
+
+
+Sobre o index.js :
+Este arquivo index.js implementa um servidor web usando o framework Express.js, que oferece funcionalidades de um sistema de gerenciamento de notas com autenticação de usuários utilizando JSON Web Tokens (JWT).
+Ele configura um servidor Express que serve páginas HTML e fornece uma API RESTful para um sistema de gerenciamento de notas. Ele inclui funcionalidades para login, registro, atualização de perfil com  CRUD (Criar, Ler, Atualizar, Deletar), nas notas tem como atualizar criar, ler e deletar, e tem  autenticação baseada em tokens JWT onde os dados são armazenados em um arquivo JSON (database.json).
+
+Sobre database.json:
+Este json armazena os usuários e  notas, associadas a cada usuário através de userId.
+
+Sobre index.html :
+Implementa uma página de login para uma aplicação web que gerencia notas.
+Nele tem o HTML e JavaScript que implementa uma página de login funcional que interage com um backend para autenticação de usuários. Ele captura os dados de login, envia uma requisição ao servidor, lida com a resposta e armazena o token JWT e os dados do usuário localmente para uso posterior. Em caso de falha no login, exibe uma mensagem de erro ao usuário.
+
+Sobre register.html:
+Ele implementa uma página de registro de usuários para uma aplicação web que gerencia notas.
+Como informado em index.html o registrer também tem o HTML e JavaScript onde implementa uma página de registro funcional que interage com um backend para criação de novos usuários. Ele captura os dados de registro, envia uma requisição ao servidor, lida com a resposta e exibe mensagens de erro apropriadas quando necessário. Em caso de sucesso, redireciona o usuário para a página de login.
+
+Sobre profile.html:
+Implementa uma página de perfil de usuário para uma aplicação web que gerencia notas.
+O mesmo tem o HTML e JavaScript, onde a página de perfil é funcional e permite ao usuário atualizar suas informações pessoais (nome, email e senha). Ele verifica a autenticação do usuário, preenche os campos do formulário com os dados do usuário armazenados no localStorage, envia uma requisição ao servidor para atualizar os dados e lida com possíveis erros de forma adequada, exibindo mensagens de erro apropriadas. Em caso de sucesso, atualiza os dados no localStorage e redireciona o usuário para a página de notas.
+
+
+Sobre dashboard.html:
+Implementa uma página que exibe as notas do usuário autenticado em uma aplicação web de gerenciamento de notas.
+A página para exibir as notas do usuário. Ele verifica a autenticação do usuário, exibe o nome do usuário, carrega as notas do usuário a partir de uma API e exibe a lista de notas. O usuário também pode criar uma nova nota ou fazer logout. Em caso de logout, o token de autenticação e os dados do usuário são removidos do localStorage e o usuário é redirecionado para a página de login.
+
+Sobre register-note.html:
+No register note é onde implementa uma página de criação de notas para uma aplicação web que gerencia notas.
+A página que tem o HTML e JavaScript, onde a criação de notas é funcional, ela permite que o usuário adicionar novas notas, verifica a autenticação do usuário, preenche os campos do formulário, envia uma requisição ao servidor para criar a nota e lida com possíveis erros, caso tenha erro é exibindo mensagens. Caso não tenha erro o usuário é redireciona para a página de notas. Além disso, o usuário pode fazer logout, removendo o token de autenticação e os dados do usuário do localStorage, e sendo redirecionado para a página de notas.
+
+
+Sobre note.html:
+No note.html é onde implementa uma página de visualização e exclusão de notas para uma aplicação web que gerencia notas.
+Então é implementado uma página de visualização e exclusão de notas. Onde ele verifica a autenticação do usuário, exibe os detalhes da nota selecionada e permite que o usuário exclua a nota. Em caso de exclusão bem-sucedida, redireciona o usuário para a lista de notas. Além disso, o usuário pode fazer logout, removendo o token de autenticação e os dados do usuário do localStorage, e sendo redirecionado para a página de notas.
+
+Em resumo:
+
+Funcionalidades:
+
+Verificação de autenticação: redireciona para a página de login se o usuário não estiver autenticado.
+Logout: remove os dados de autenticação do localStorage e redireciona para a página de login.
+
+Página de Login:
+
+Permite que os usuários façam login fornecendo seu e-mail e senha.
+Exibe uma mensagem de erro se as credenciais forem inválidas.
+Os dados do usuário e o token de acesso são armazenados no localStorage após o login bem-sucedido.
+
+Página de Registro:
+
+Permite que novos usuários se cadastrem fornecendo seu nome, e-mail e senha.
+Exibe mensagens de erro se houver campos em branco ou se o e-mail já estiver cadastrado no sistema.
+
+
+Página de Lista de Notas:
+
+Exibe uma lista de todas as notas do usuário.
+Mostra o número total de notas.
+Permite que os usuários acessem os detalhes de uma nota clicando em seu título.
+Exige autenticação para acessar a página.
+
+Página de Detalhes da Nota:
+
+Exibe os detalhes de uma nota específica, incluindo título, conteúdo e, se disponível, um link.
+Permite que os usuários excluam a nota atual.
+Exige autenticação para acessar a página.
+
+Página de Criação de Nota:
+
+Permite que os usuários criem novas notas, fornecendo um título, conteúdo e, opcionalmente, um link.
+Exige autenticação para acessar a página.
+
+Página de Perfil:
+
+Permite que os usuários visualizem e atualizem suas informações pessoais, como nome, e-mail e senha.
+Exige autenticação para acessar a página.
+Exibe mensagens de erro se a senha atual estiver incorreta ou se houver campos em branco durante a atualização.
+
+
+As funcionalidades que formam criadas é para um sistema básico de gerenciamento de notas.
+Onde os usuários podem se registrar, fazer login, visualizar e editar seu perfil.
+Nas notas ele pode criar, visualizar e excluir notas.
+E essas  operações tem autenticação.
+
+
+Rotas de cada tela:
+Página de Login:
+
+Rota: /
+Método: GET
+Arquivo: index.html
+Página de Registro:
+
+Rota: /register
+Método: GET
+Arquivo: register.html
+Página de Perfil:
+
+Rota: /profile
+Método: GET
+Arquivo: profile.html
+Página de Criação de Nota:
+
+Rota: /new
+Método: GET
+Arquivo: register-note.html
+Página de Detalhes da Nota:
+
+Rota: /note/:id
+Método: GET
+Arquivo: note.html
+Página de Lista de Notas:
+
+Rota: /notes
+Método: GET
+Arquivo: dashboard.html

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <title>Notas | Perfil</title>
+
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const token = localStorage.getItem('@token');
+
+        if (!token) {
+          window.location.href = '/';
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <section class="container-login">
+      <div class="content-login">
+        <div>
+          <h1 class="title">Perfil</h1>
+
+          <div id="error" class="error-content">
+            <p id="error-required">
+              Todos os campos são obrigatório!
+            </p>
+            <p id="error-password">
+              A senha atual está incorreta!
+            </p>
+          </div>
+        </div>
+
+        <form class="form-login" id="profile-form">
+          <input class="form-input" id="name" type="text" name="name" placeholder="Nome" required />
+          <input class="form-input" id="email" type="email" name="email" placeholder="E-mail" required />
+          <input class="form-input" id="oldPassword" type="password" name="oldPassword" placeholder="Senha atual" />
+          <input class="form-input" id="newPassword" type="password" name="newPassword" placeholder="Nova senha" />
+          <button class="btn-primary" type="submit">Salvar</button>
+        </form>
+
+        <a class="link" href="/notes">Voltar</a>
+      </div>
+    </section>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', async function() {
+        const user = JSON.parse(localStorage.getItem('@user'));
+
+        document.getElementById('name').value = user.name;
+        document.getElementById('email').value = user.email;
+      });
+
+      document.getElementById('profile-form').addEventListener('submit', async function(event) {
+        event.preventDefault();
+        const token = localStorage.getItem('@token');
+        const user = JSON.parse(localStorage.getItem('@user'));
+
+        
+        
+        const errorDiv = document.getElementById('error');
+        const errorRequired = document.getElementById('error-required');
+        const errorPassword = document.getElementById('error-password');
+
+        const name = event.target.name.value;
+        const email = event.target.email.value;
+        const oldPassword = event.target.oldPassword.value;
+        const newPassword = event.target.newPassword.value;
+
+        errorDiv.style.display = 'none';
+        errorRequired.style.display = 'none';
+        errorPassword.style.display = 'none';
+
+        try {
+          const response = await fetch('http://localhost:8080/users/update', {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ name, email, oldPassword, newPassword })
+          });
+
+          if(response.status === 400) {
+            errorPassword.style.display = 'block';
+            errorDiv.style.display = 'block';
+          } else if(response.status === 404) {
+            errorRequired.style.display = 'block';
+            errorDiv.style.display = 'block';
+          } else {
+            user.name = name;
+            user.email = email;
+            localStorage.setItem('@user', JSON.stringify(user));
+            window.location.href = '/notes';
+          }
+        } catch (error) {
+          errorDiv.style.display = 'block';
+        }
+      });
+    </script>
+  </body>
+</html>

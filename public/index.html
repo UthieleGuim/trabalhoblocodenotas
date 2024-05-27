@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <title>Notas | Login</title>
+
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <section class="container-login">
+      <div class="content-login">
+        <div>
+          <h1 class="title">Faça seu login</h1>
+          <p class="description">Aplicação para salvar e gerenciar suas notas.</p>
+
+          <div id="error" class="error-content">
+            <p>
+              E-mail ou senha inválido!
+            </p>
+          </div>
+        </div>
+
+        <form class="form-login" id="login-form">
+          <input class="form-input" type="email" name="email" placeholder="E-mail" required/>
+          <input class="form-input" type="password" name="password" placeholder="Senha" required/>
+          <button class="btn-primary" type="submit">Entrar</button>
+        </form>
+
+        <a class="link" href="/register">Criar conta</a>
+      </div>
+    </section>
+
+    <script>
+      document.getElementById('login-form').addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const errorDiv = document.getElementById('error');
+        
+        errorDiv.style.display = 'none';
+
+        const email = event.target.email.value;
+        const password = event.target.password.value;
+
+        try {
+          const response = await fetch('http://localhost:8080/session', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password })
+          });
+
+          const result = await response.json();
+
+          if(response.status === 401) {
+            errorDiv.style.display = 'block';
+          } else {
+            localStorage.setItem('@token', result.accessToken);
+            localStorage.setItem('@user', JSON.stringify(result.userRes));
+
+            window.location.href = '/notes';
+          }
+        } catch (error) {
+          errorDiv.style.display = 'block';
+        }
+      });
+    </script>
+  </body>
+</html>

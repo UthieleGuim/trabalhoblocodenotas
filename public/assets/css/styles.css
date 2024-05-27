@@ -1,0 +1,297 @@
+* {
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  border: 0;
+  box-sizing: border-box;  
+}
+
+body {
+  font-family: "Roboto", Helvetica, Arial, sans;
+  background-color: #232129;
+}
+
+.container-header {
+  width: 100%;
+  height: 90px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #3E3B47;
+}
+
+.content-header {
+  width: 100%;
+  max-width: 1200px;
+
+  padding: 10px 30px;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-profile {
+  width: 120px;
+  height: 60px;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  color: #FFF;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #FF9000;
+
+  padding: 10px;
+  border-radius: 12px;
+  text-decoration: none;
+
+  cursor: pointer;
+}
+
+.btn-profile:hover {
+  opacity: 0.9;
+}
+
+.container {
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 50px;
+}
+
+.content {
+  width: 100%;
+  max-width: 900px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  background-color: #312E38;
+  padding: 40px 30px;
+  border-radius: 8px;
+}
+
+.container-login {
+  width: 100%;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content-login {
+  width: 100%;
+  max-width: 600px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  background-color: #3E3B47;
+  padding: 40px 30px;
+  border-radius: 16px;
+}
+
+.form-login {
+  margin-top: 30px;
+}
+
+.title {
+  color: #FF9000;
+  font-size: 36px;
+  text-align: center;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.description {
+  color: #999591;
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.error-content {
+  display: none;
+  text-align: center;
+  color: #FF002E;
+  font-size: 14px;
+  margin: 20px 0;
+}
+
+.form-input {
+  width: 100%;
+  height: 50px;
+
+  background-color: #232129;
+  color: #FFFFFF;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.form-textarea {
+  width: 100%;
+
+  background-color: #232129;
+  color: #FFFFFF;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.btn-primary {
+  width: 100%;
+  height: 50px;
+  border-radius: 8px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #FF9000;
+  color: #312E38;
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 20px;
+  text-decoration: none;
+
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+.link {
+  color: #FF9000;
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: none;
+
+  margin-top: 60px;
+}
+
+.link:hover {
+  opacity: 0.9;
+}
+
+.btn-link {
+  color: #FF9000;
+  font-size: 20px;
+  font-weight: bold;
+  background: none;
+
+  cursor: pointer;
+}
+
+.btn-link:hover {
+  opacity: 0.9;
+}
+
+.header-note {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+
+  border-bottom: 2px solid;
+  border-color: #999591;
+}
+
+.header-note p {
+  color: #999591;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.header-note span {
+  width: 20px;
+  height: 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #FF9000;
+  color: #312E38;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 50%;
+}
+
+.container-note {
+  width: 100%;
+}
+
+.content-note {
+  display: flex;
+  width: 100%;
+
+  background-color: #3E3B47;
+  color: #F4EDE8;
+  font-size: 28px;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 8px;
+  padding: 15px 30px;
+  margin-bottom: 15px;
+}
+
+.content-note:hover {
+  opacity: 0.9;
+}
+
+.title-note {
+  color: #F4EDE8;
+  font-size: 36px;
+  margin-top: 30px;
+}
+
+.description-note {
+  color: #F4EDE8;
+  font-size: 16px;
+  text-align: left;
+
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+
+  margin: 30px 0;
+}
+
+.link-note {
+  display: inline-block;
+
+  color: #F4EDE8;
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: none;
+  margin-top: 20px;
+  margin-bottom: 60px;
+
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+
+  margin-bottom: 40px;
+}
+
+.link-note:hover {
+  color: #FF9000;
+}

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <title>Notas | Minhas notas</title>
+
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const token = localStorage.getItem('@token');
+
+        if (!token) {
+          window.location.href = '/';
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <header class="container-header">
+      <div class="content-header">
+        <a class="btn-profile" href="/profile">
+          Bem vindo, <br>
+          <span id="name-user"></span>
+        </a>
+
+        <button class="btn-link" id="logout">Sair</button>
+      </div>
+    </header>
+
+    <section class="container">
+      <div class="content">
+        <div class="header-note">
+          <p>Minhas notas</p>
+          <span id="total"></span>
+        </div>
+
+        <div id="list-notes" class="container-note"></div>
+
+        <a class="btn-primary" href="/new">Criar nota</a>
+      </div>
+    </section>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', async function() {
+        const user = JSON.parse(localStorage.getItem('@user'));
+        const token = localStorage.getItem('@token');
+
+        const listNotesDiv = document.getElementById('list-notes');
+        const totalNotesDiv = document.getElementById('total');
+        const nameUserDiv = document.getElementById('name-user');
+
+        nameUserDiv.textContent = user.name.split(' ')[0];
+
+        try {
+          const response = await fetch('http://localhost:8080/users/notes', {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            }
+          });
+
+          const result = await response.json();
+
+          totalNotesDiv.textContent = result.length;
+
+          let notes = '';
+
+          result.map(note => {
+            notes += `<a key="${note.id}" class="content-note" href="/note/${note.id}">${note.title}</a>`;
+          });
+
+          listNotesDiv.innerHTML = notes;
+        } catch (error) {
+          console.log(error);
+        }
+      });
+
+      document.getElementById('logout').addEventListener('click', async function() {
+        localStorage.removeItem('@token');
+        localStorage.removeItem('@user');
+
+        window.location.href = '/notes';
+      });
+    </script>
+  </body>
+</html>
