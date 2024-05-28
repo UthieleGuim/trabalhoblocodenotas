@@ -1,4 +1,4 @@
-Projeto se refere ao um bloco de notas, onde o usurio apois fazer o cadastro e logar o mesmo pode criar, editar e exlucir suas notas, além disso se caso for necessario tem um campo onde o mesmo pode colocar  link.
+Projeto se refere ao um bloco de notas, onde o usurio apois fazer o cadastro e logar o mesmo pode criar e excluir suas notas, além disso se caso for necessario tem um campo onde o mesmo pode colocar  link.
 
 -Configurar e executar o projeto :
 Para executar o projeto primeiro extrair a pasta( consta zipada), abrir no vs code e após isso abrir o terminal, ao abrir o  terminal escrever node index.js para executar, com isso vai aparecer o server com o localhost e a porta (8080).
